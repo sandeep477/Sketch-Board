@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sketchborad-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sketchboard-app
+      tier: sketchboard
+  template:
+    metadata:
+      labels:
+        app: sketchboard-app
+        tier: sketchboard
+    spec:
+      containers:
+        - name: sketchboard-node
+          image: sandeep114/sketchboard
+          ports:
+            - containerPort: 3000
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            periodSeconds: 10
+            initialDelaySeconds: 5     
